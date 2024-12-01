@@ -33,14 +33,13 @@ try:
 
     # Убедиться, что плагин скачался
     file_name = 'sbisplugin-setup-web.exe'
-
     for i in range(30):
         sleep(1)
         if file_name in os.listdir(download_folder):
             break
 
     # Вывести на печать размер скачанного файла в мегабайтах
-    print(round(os.path.getsize(os.path.join(download_folder, file_name)) / (1024 ** 2), 2), 'MB')
+    print(round(os.path.getsize(os.path.join(download_folder, file_name)) / (1024 ** 2)), 'MB')
 
 finally:
     driver.quit()

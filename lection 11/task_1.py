@@ -14,8 +14,8 @@ driver = webdriver.Chrome()
 try:
     # Перейти на https://sbis.ru/
     driver.get('https://sbis.ru/')
+    sleep(3)
     assert driver.current_url == 'https://sbis.ru/'
-    sleep(2)
 
     # Перейти в раздел "Контакты"
     contacts = driver.find_element(By.CSS_SELECTOR, '.sbisru-Header-ContactsMenu.js-ContactsMenu')
@@ -25,23 +25,24 @@ try:
     link = driver.find_element(By.CSS_SELECTOR, '.sbisru-Header-ContactsMenu.js-ContactsMenu').find_element(By.CSS_SELECTOR,'.sbisru-link.sbis_ru-link')
     assert link.get_attribute('href') == 'https://sbis.ru/contacts'
     link.click()
-    sleep(1)
+    sleep(3)
 
     # Найти баннер Тензор, кликнуть по нему
     banner = driver.find_element(By.CSS_SELECTOR, '.sbisru-Contacts__border-left.sbisru-Contacts__border-left--border-xm').find_element(By.CSS_SELECTOR, '.sbisru-Contacts__logo-tensor')
     assert banner.get_attribute('title') == 'tensor.ru'
     banner.click()
-    driver.switch_to.window(driver.window_handles[1])
     sleep(3)
+    driver.switch_to.window(driver.window_handles[1])
+    sleep(2)
 
     # Перейти на https://tensor.ru/
-    driver.get('https://tensor.ru/')
     assert driver.current_url == 'https://tensor.ru/'
 
     # Проверить, что есть блок новости "Сила в людях"
     news = driver.find_element(By.CSS_SELECTOR, '.tensor_ru-Index__block4-bg')
     news_title = news.find_element(By.CSS_SELECTOR, '.tensor_ru-Index__card-title.tensor_ru-pb-16')
     assert news_title.text == 'Сила в людях'
+    driver.execute_script("return arguments[0].scrollIntoView(true);", news_title)
     sleep(2)
 
     # Перейдите в этом блоке в "Подробнее" и убедитесь, что открывается https://tensor.ru/about
@@ -49,6 +50,7 @@ try:
     assert link.get_attribute('href') == 'https://tensor.ru/about'
     link.click()
     sleep(2)
+    assert driver.current_url == 'https://tensor.ru/about'
 
 finally:
     driver.quit()

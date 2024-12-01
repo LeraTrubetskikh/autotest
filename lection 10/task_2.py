@@ -36,6 +36,5 @@ def test_long_division():
     assert all_division(1000000, 10, 10, 10, 10, 10, 10) == 1
 
 
-@pytest.mark.acceptance
 def test_division_by_one():
     assert all_division(10, 1) == 10
